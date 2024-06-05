@@ -3,26 +3,27 @@ from flask import Flask
 from flask import request
 import time
 from llama_cpp import Llama
+import os
 
 SERVER_PORT = 9501
 HOST_URL="127.0.0.1"
-MODEL_PATH = "./models/codellama-7b.Q3_K_L.gguf"
+MODEL_PATH = os.path.join("..", "models", "capybarahermes-2.5-mistral-7b.Q4_K_M.gguf")
 # MODEL_PATH = "./models/vicuna-13b-v1.5.gguf"
 
 
 
 
-def get_model():
+def get_model(model_path):
     print("="*100, "\nModel Info\n", "="*100, "\n")
     model = Llama(
-        model_path=MODEL_PATH,
+        model_path=model_path,
         n_ctx=512,
         n_batch=48
     )
     print("\n", "="*100, "\nModel Info\n", "="*100)
     return model
 
-model = get_model()
+model = get_model(MODEL_PATH)
 app = Flask(__name__)
 
 @app.route("/")
