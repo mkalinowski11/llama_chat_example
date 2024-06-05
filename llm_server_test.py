@@ -8,7 +8,7 @@ URL = f"http://{HOST_URL}:{SERVER_PORT}/predict"
 def format_prompt(prompt):
     return f"""<|im_start|>system
 You are a helpful chatbot.<|im_end|>
-<|im_start|>user
+<|im_start|>user 
 {prompt}<|im_end|>"""
 
 def send_request(prompt):
