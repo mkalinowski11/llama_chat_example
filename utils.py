@@ -2,14 +2,20 @@ import requests
 import random
 import time
 
-def format_prompt(prompt):
-    return f"""<|im_start|>system
-You are a helpful chatbot.<|im_end|>
-<|im_start|>user
-{prompt}<|im_end|>"""
+PROMPT_TOKEN="<PROMPT>"
+PROMPT_TYPE="codelllama"
+PROMPT_FORMATS = {
+    "universal": """<|im_start|>system\nYou are a helpful chatbot.<|im_end|>\n<|im_start|>user\n<PROMPT><|im_end|>""",
+    "codelllama": """[INST] Write code to solve the following coding problem that obeys the constraints and passes the example test cases. Please wrap your code answer using ```:\n<PROMPT>\n[/INST]"""
+}
+
+def format_prompt(prompt, prompt_type="universal"):
+    if prompt_type is None:
+        return prompt
+    return PROMPT_FORMATS[prompt_type].replace(PROMPT_TOKEN, prompt)
 
 def send_request(url, prompt, max_tokens=256, temperature=1.0, top_p=0.5):
-    prompt = format_prompt(prompt)
+    prompt = format_prompt(prompt, prompt_type=PROMPT_TYPE)
     data = {
         "prompt": prompt,
         "max_tokens": max_tokens,

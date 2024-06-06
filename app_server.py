@@ -7,7 +7,7 @@ import os
 
 SERVER_PORT = 9501
 HOST_URL="127.0.0.1"
-MODEL_PATH = os.path.join("..", "models", "capybarahermes-2.5-mistral-7b.Q4_K_M.gguf")
+MODEL_PATH = os.path.join("..", "models", "codellama-7b-instruct.Q5_K_S.gguf")
 # MODEL_PATH = "./models/vicuna-13b-v1.5.gguf"
 
 

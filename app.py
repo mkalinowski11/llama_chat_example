@@ -8,6 +8,7 @@ HOST_URL="127.0.0.1"
 URL = f"http://{HOST_URL}:{SERVER_PORT}/predict"
 
 if __name__ == "__main__":
+    
     st.set_page_config(layout="wide")
     st.markdown("<h1 style='text-align: center;'>LLAMA Chat</h1>", unsafe_allow_html=True)
 
