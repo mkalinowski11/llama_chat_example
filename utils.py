@@ -9,6 +9,11 @@ PROMPT_FORMATS = {
     "codelllama": """[INST] Write code to solve the following coding problem that obeys the constraints and passes the example test cases. Please wrap your code answer using ```:\n<PROMPT>\n[/INST]"""
 }
 
+def read_prompt(path):
+    with open(path, "r") as file:
+        prompt_lines = file.readlines()
+    return "".join(prompt_lines)
+
 def format_prompt(prompt, prompt_type="universal"):
     if prompt_type is None:
         return prompt
