@@ -16,13 +16,17 @@ def format_prompt(prompt, format_file=None):
     return format_text.replace(PROMPT_TOKEN, prompt)
 
 def send_request(url, prompt, format_file=None, max_tokens=256, temperature=1.0, top_p=0.5):
-    prompt = format_prompt(prompt, format_file=format_file)
-    data = {
-        "prompt": prompt,
+    data = {}
+    if isinstance(prompt, str):
+        prompt = format_prompt(prompt, format_file=format_file)
+        data["prompt"] = prompt
+    elif isinstance(prompt, list):
+        data["messages"] = prompt
+    data.update({
         "max_tokens": max_tokens,
         "temperature": temperature,
         "top_p": top_p
-    }
+    })
     response = requests.post(url, json=data)
     return response.json()
 

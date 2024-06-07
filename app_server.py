@@ -42,7 +42,14 @@ def generate_response(prompt, max_tokens=512, temperature=0.2, top_p=0.5, stop=[
     return response
 
 def apply_chat(messages, max_tokens, temperature=0.2, top_p=0.5, stop=["#"], **kwargs):
-    response = messages
+    response = model.create_chat_completion(
+        messages,
+        max_tokens=max_tokens,
+        temperature=temperature,
+        top_p=top_p,
+        stop=stop,
+        **kwargs
+    )
     return response
 
 @app.route("/predict", methods=["POST"])
