@@ -2,10 +2,13 @@ import streamlit as st
 import random
 import time
 from utils import send_request, response_generator
+import os
 
 SERVER_PORT = 9501
 HOST_URL="127.0.0.1"
 URL = f"http://{HOST_URL}:{SERVER_PORT}/predict"
+PROMPT_TEMPLATE = "template2.txt"
+TEMPLATE_PATH = os.path.join(os.getcwd(), "templates", PROMPT_TEMPLATE)
 
 if __name__ == "__main__":
     
@@ -56,6 +59,7 @@ if __name__ == "__main__":
                 response = send_request(
                     url=URL,
                     prompt=prompt,
+                    format_file=TEMPLATE_PATH,
                     max_tokens=st.session_state.max_words,
                     temperature=st.session_state.temperature,
                     top_p=st.session_state.top_p
