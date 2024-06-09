@@ -4,7 +4,7 @@ import time
 from utils import send_request, response_generator
 import os
 
-SERVER_PORT = 9501
+SERVER_PORT = 9502
 HOST_URL="127.0.0.1"
 URL = f"http://{HOST_URL}:{SERVER_PORT}/predict"
 PROMPT_TEMPLATE = "template2.txt"
