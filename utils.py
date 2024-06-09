@@ -24,11 +24,13 @@ def send_request(url, prompt, format_file=None, max_tokens=256, temperature=1.0,
         data["messages"] = prompt
     data.update({
         "max_tokens": max_tokens,
-        "temperature": temperature,
+        # "temperature": temperature,
+        "temp" : temperature,
         "top_p": top_p
     })
-    response = requests.post(url, json=data)
-    return response.json()
+    response = requests.post(url, json=data, stream=True)
+    # return response.json()
+    return response
 
 def response_generator():
     response = random.choice(
