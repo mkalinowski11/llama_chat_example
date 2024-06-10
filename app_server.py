@@ -40,11 +40,11 @@ def generate_response(prompt, max_tokens=512, temperature=0.2, top_p=0.5, stop=[
     )
     return response
 
-def apply_chat(messages, max_tokens, temperature=0.2, top_p=0.5, stop=["#"], **kwargs):
+def apply_chat(messages, max_tokens, temp=0.2, top_p=0.5, stop=["#"], **kwargs):
     response = model.create_chat_completion(
         messages,
         max_tokens=max_tokens,
-        temperature=temperature,
+        temperature=temp,
         top_p=top_p,
         stop=stop,
         **kwargs
