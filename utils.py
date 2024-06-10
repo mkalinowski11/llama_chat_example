@@ -50,4 +50,8 @@ def response_stream_generator(llama_model, prompt, max_tokens=128, **kwargs):
     for idx, token in enumerate(llama_model.generate(tokenized_prompt, **kwargs)):
         if token == llama_model.token_eos() or idx == max_tokens:
             break
-        yield llama_model.detokenize([token]).decode()
+        yield llama_model.detokenize([token])
+
+def byte_str_adapter(input_generator):
+    for token in input_generator:
+        yield token.decode()
