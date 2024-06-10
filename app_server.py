@@ -1,17 +1,16 @@
 # import transformers
-from flask import Flask
-from flask import request
+from flask import Flask, Response, request
 import time
 from llama_cpp import Llama
 import os
+from utils import response_stream_generator
 
 SERVER_CONFIG={
-    "server_port" : 9501,
+    "server_port" : 9502,
     "host_url" : "127.0.0.1",
     "model_path" : os.path.join("..", "models", "codellama-7b-instruct.Q5_K_S.gguf"),
     "model_max_context" : 512
 }
-
 
 def get_model():
     print("="*100, "\nModel Info\n", "="*100, "\n")
@@ -65,6 +64,12 @@ def predict_chat():
         data = request.get_json()
         response = apply_chat(**data)
         return response
+
+@app.route("/predict_stream", methods=["POST"])
+def predict_stream():
+    if request.method == 'POST':
+        data = request.get_json()
+        return Response(response_stream_generator(model, **data), mimetype='text/event-stream')
 
 if __name__ == "__main__":
     app.run(host=SERVER_CONFIG["host_url"], port=SERVER_CONFIG["server_port"])

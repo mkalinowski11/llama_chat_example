@@ -1,12 +1,12 @@
 import streamlit as st
 import random
 import time
-from utils import send_request, response_generator
+from utils import send_request, response_generator, byte_str_adapter
 import os
 
-SERVER_PORT = 9501
+SERVER_PORT = 9502
 HOST_URL="127.0.0.1"
-URL = f"http://{HOST_URL}:{SERVER_PORT}/predict"
+URL = f"http://{HOST_URL}:{SERVER_PORT}/predict_stream"
 PROMPT_TEMPLATE = "template2.txt"
 TEMPLATE_PATH = os.path.join(os.getcwd(), "templates", PROMPT_TEMPLATE)
 
@@ -56,14 +56,26 @@ if __name__ == "__main__":
         with st.chat_message("assistant"):
             with st.spinner("Generating response..."):
                 # response_text = st.write_stream(response_generator())
-                response = send_request(
-                    url=URL,
-                    prompt=prompt,
-                    format_file=TEMPLATE_PATH,
-                    max_tokens=st.session_state.max_words,
-                    temperature=st.session_state.temperature,
-                    top_p=st.session_state.top_p
+                # response = send_request(
+                #     url=URL,
+                #     prompt=prompt,
+                #     format_file=TEMPLATE_PATH,
+                #     max_tokens=st.session_state.max_words,
+                #     temperature=st.session_state.temperature,
+                #     top_p=st.session_state.top_p
+                # )
+                # response_text = response["choices"][0]["text"].strip()
+                # st.markdown(response_text)
+                response_text = st.write_stream(
+                    byte_str_adapter(
+                        send_request(
+                            url=URL,
+                            prompt=prompt,
+                            format_file=TEMPLATE_PATH,
+                            max_tokens=st.session_state.max_words,
+                            temperature=st.session_state.temperature,
+                            top_p=st.session_state.top_p
+                        )
+                    )
                 )
-                response_text = response["choices"][0]["text"].strip()
-                st.markdown(response_text)
         st.session_state.messages.append({"role": "assistant", "content": response_text})
