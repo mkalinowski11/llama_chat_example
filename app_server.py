@@ -3,20 +3,15 @@ from flask import Flask, Response, request
 import time
 from llama_cpp import Llama
 import os
-from utils import response_stream_generator
+from utils import response_stream_generator, read_config
 
-SERVER_CONFIG={
-    "server_port" : 9502,
-    "host_url" : "127.0.0.1",
-    "model_path" : os.path.join("..", "models", "codellama-7b-instruct.Q5_K_S.gguf"),
-    "model_max_context" : 512
-}
+config = read_config("./config.json")
 
 def get_model():
     print("="*100, "\nModel Info\n", "="*100, "\n")
     model = Llama(
-        model_path=SERVER_CONFIG["model_path"],
-        n_ctx=SERVER_CONFIG["model_max_context"],
+        model_path=config["model_path"],
+        n_ctx=config["model_max_context"],
         n_batch=48
     )
     print("\n", "="*100, "\nModel Info\n", "="*100)
@@ -72,4 +67,4 @@ def predict_stream():
         return Response(response_stream_generator(model, **data), mimetype='text/event-stream')
 
 if __name__ == "__main__":
-    app.run(host=SERVER_CONFIG["host_url"], port=SERVER_CONFIG["server_port"])
+    app.run(host=config["host_url"], port=config["server_port"])

@@ -1,6 +1,7 @@
 import requests
 import random
 import time
+import json
 
 PROMPT_TOKEN="<PROMPT>"
 
@@ -55,3 +56,8 @@ def response_stream_generator(llama_model, prompt, max_tokens=128, **kwargs):
 def byte_str_adapter(input_generator):
     for token in input_generator:
         yield token.decode()
+
+def read_config(path):
+    with open(path, "r") as file:
+        data = json.load(file)
+    return data
