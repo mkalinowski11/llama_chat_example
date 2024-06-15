@@ -1,14 +1,10 @@
 import streamlit as st
 import random
 import time
-from utils import send_request, response_generator, byte_str_adapter
+from utils import send_request, response_generator, byte_str_adapter, read_config
 import os
 
-SERVER_PORT = 9502
-HOST_URL="127.0.0.1"
-URL = f"http://{HOST_URL}:{SERVER_PORT}/predict_stream"
-PROMPT_TEMPLATE = "template2.txt"
-TEMPLATE_PATH = os.path.join(os.getcwd(), "templates", PROMPT_TEMPLATE)
+config = read_config("./config.json")
 
 if __name__ == "__main__":
     
@@ -69,9 +65,9 @@ if __name__ == "__main__":
                 response_text = st.write_stream(
                     byte_str_adapter(
                         send_request(
-                            url=URL,
+                            url=config["url"],
                             prompt=prompt,
-                            format_file=TEMPLATE_PATH,
+                            format_file=config["template_path"],
                             max_tokens=st.session_state.max_words,
                             temperature=st.session_state.temperature,
                             top_p=st.session_state.top_p
