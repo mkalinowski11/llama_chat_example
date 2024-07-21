@@ -34,11 +34,11 @@ def send_request(url, prompt, format_file=None, max_tokens=256, temperature=1.0,
     return response
 
 def response_generator():
+    # just for testing streamlit's GUI with streaming output
     response = random.choice(
         [
             "Hello there! How can I assist you today?",
-            "Hi, human! Is there anything I can help you with?",
-            "Do you need help?",
+            "Is there anything I can help you with?",
         ]
     )
     time.sleep(2.)
