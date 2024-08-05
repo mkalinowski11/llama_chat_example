@@ -3,23 +3,15 @@ from flask import Flask, Response, request
 import time
 from llama_cpp import Llama
 import os
-from utils import response_stream_generator
+from utils import response_stream_generator, read_config
 
-# default default_config should correspond to the original one from parent directory
-default_config = {
-    "server_port" : 9502,
-    "host_url" : "127.0.0.1",
-    "url" : "http://127.0.0.1:9502/predict_stream",
-    "template_path" : "./templates/template2.txt",
-    "model_path" : "../models/codellama-7b-instruct.Q5_K_S.gguf",
-    "model_max_context" : 512
-}
+config = read_config("./config.json")
 
 def get_model():
     print("="*100, "\nModel Info\n", "="*100, "\n")
     model = Llama(
-        model_path=os.environ.get("MODEL_PATH", default_config["model_path"]),
-        n_ctx=int(os.environ.get("MODEL_MAX_CONTEXT", default_config["model_max_context"])),
+        model_path=os.environ.get("MODEL_PATH", config["model_path"]),
+        n_ctx=int(os.environ.get("MODEL_MAX_CONTEXT", config["model_max_context"])),
         n_batch=48
     )
     print("\n", "="*100, "\nModel Info\n", "="*100)
@@ -76,6 +68,6 @@ def predict_stream():
 
 if __name__ == "__main__":
     app.run(
-        host=os.environ.get("HOST_URL", default_config["host_url"]),
-        port=int(os.environ.get("SERVER_PORT", default_config["server_port"]))
+        host=os.environ.get("HOST_URL", config["host_url"]),
+        port=int(os.environ.get("SERVER_PORT", config["server_port"]))
     )

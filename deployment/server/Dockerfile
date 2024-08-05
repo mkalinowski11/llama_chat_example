@@ -7,12 +7,15 @@ COPY ./app_server.py /app/app_server.py
 
 WORKDIR /app
 
-RUN pip install -r requirements.txt
+RUN apt-get update -y \
+    && apt-get install gcc g++ cmake libc-dev -y
 
-RUN export MODEL_PATH=./models/codellama-7b-instruct.Q5_K_S.gguf
-RUN export HOST_URL=127.0.0.1
-RUN export SERVER_PORT=9502
-RUN export MODEL_MAX_CONTEXT=512
+RUN pip3 install -r requirements.txt
+
+ENV MODEL_PATH=./models/codellama-7b-instruct.Q5_K_S.gguf
+ENV HOST_URL=0.0.0.0
+ENV SERVER_PORT=9502
+ENV MODEL_MAX_CONTEXT=512
 
 ENTRYPOINT ["python"]
 CMD ["app_server.py"]

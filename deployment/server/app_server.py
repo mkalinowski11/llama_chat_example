@@ -8,8 +8,8 @@ from utils import response_stream_generator
 # default default_config should correspond to the original one from parent directory
 default_config = {
     "server_port" : 9502,
-    "host_url" : "127.0.0.1",
-    "url" : "http://127.0.0.1:9502/predict_stream",
+    "host_url" : "0.0.0.0",
+    "url" : "http://0.0.0.0:9502/predict_stream",
     "template_path" : "./templates/template2.txt",
     "model_path" : "../models/codellama-7b-instruct.Q5_K_S.gguf",
     "model_max_context" : 512

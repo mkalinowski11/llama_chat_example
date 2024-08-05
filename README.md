@@ -30,3 +30,5 @@ and prompt processing.
 ## Running an application
 1. First terminal ```python3 app_server.py```
 2. Second terminal ```streamlit run app.py```
+
+## Running server on Docker environment
