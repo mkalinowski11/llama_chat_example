@@ -8,10 +8,10 @@ from utils import response_stream_generator
 # defaults should correspond to the original one from parent directory
 
 SERVER_PORT         = 9502,
-HOST_URL            = "0.0.0.0",
-URL                 = "http://0.0.0.0:9502/predict_stream",
-TEMPLATE_PATH       = "./templates/template2.txt",
-MODEL_PATH          = "../models/codellama-7b-instruct.Q5_K_S.gguf",
+HOST_URL            = "0.0.0.0"
+URL                 = "http://0.0.0.0:9502/predict_stream"
+TEMPLATE_PATH       = "./templates/template2.txt"
+MODEL_PATH          = "../models/codellama-7b-instruct.Q5_K_S.gguf"
 MODEL_MAX_CONTEXT   = 512
 
 def get_model():

@@ -33,4 +33,6 @@ and prompt processing. This file is duplicated for `client` and `server` directo
 1. Build sufficient docker image by runnning command: `docker build -t llama_chat_server:latest .`
 2. Run docker container with command: `docker run -p 0.0.0.0:9502:9502 llama_chat_server:latest`
 ### Go to the `deployment/client` directory (2 terminal)
-1.
+1. Build app container with command `docker build -t llama_chat_app:latest .`
+2. Run application with command `docker run -p 0.0.0.0:9503:9503 llama_chat_app:latest`
+3. To open app GUI open `http://localhost:9503` in your browser.
